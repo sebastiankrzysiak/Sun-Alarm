@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <time.h>
+#include <stdlib.h>
 #include <unistd.h>
-#include <Python.h>
+#include <time.h>
 
 int turnOffLights();
 int setSunAlarm(int hours, int minutes, char am_pm);
@@ -86,21 +86,16 @@ int setSunAlarm(int hours, int minutes, char am_pm) {
 
 int simulateSunrise() {
 
-    Py_Initialize();
-
     FILE *file = fopen("sunrise.py", "r");
 
     if (file == NULL) {
         fprintf(stderr, "Could not open file");
-        Py_Finalize();
         return 1;
     }
 
-    PyRun_SimpleFile(file, "sunrise.py");
+    system("python3 sunrise.py");
 
     fclose(file);
-
-    Py_Finalize();
 
     return 0;   
 }
